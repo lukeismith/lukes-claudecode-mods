@@ -161,9 +161,9 @@ test('readSettings clamps numbers to their ranges, rounds counts, and replaces a
   expect([s.questionsPerHour, s.rapidReplyMinutes, s.refresherEvery, s.refresherMinAgeDays, s.dailyBudgetUsd]).toEqual([20, 1.5, 3, 1, 1000])
   const low = readSettings({ questionsPerHour: -3, rapidReplyMinutes: 90, refresherMinAgeDays: 9000, dailyBudgetUsd: 2.5 })
   expect([low.questionsPerHour, low.rapidReplyMinutes, low.refresherMinAgeDays, low.dailyBudgetUsd]).toEqual([0, 60, 3650, 2.5])
-  expect(readSettings({ questionsPerHour: '7' }).questionsPerHour).toBe(4)
+  expect(readSettings({ questionsPerHour: 'seven' }).questionsPerHour).toBe(4)
   expect(readSettings({ refresherEvery: Number.NaN }).refresherEvery).toBe(3)
-  // The /config hook clamps with the same function, and leaves other fields alone.
+  // A value typed into settings.json by hand is clamped the same way, and other fields are left alone.
   expect(clampSetting('questionsPerHour', 99)).toBe(20)
   expect(clampSetting('mode', 3)).toBe(null)
   expect(clampSetting('constructor', 3)).toBe(null)
@@ -629,4 +629,14 @@ test('estimateQuestionUsd uses the measured average, else a figure for the model
   expect(estimateQuestionUsd('haiku', null)).toBeLessThan(estimateQuestionUsd('sonnet', null))
   expect(estimateQuestionUsd('sonnet', null)).toBeLessThan(estimateQuestionUsd('opus', null))
   expect(estimateQuestionUsd('some-future-model', null)).toBe(estimateQuestionUsd('opus', null))
+})
+
+test('readSettings reads the /config pickers, which store numbers as strings, and the visible text defaults', () => {
+  const s = readSettings({ questionsPerHour: '6', rapidReplyMinutes: '0', refresherMinAgeDays: '90', dailyBudgetUsd: '0.50', categories: 'all', excludePaths: 'none' })
+  expect([s.questionsPerHour, s.rapidReplyMinutes, s.refresherMinAgeDays, s.dailyBudgetUsd]).toEqual([6, 0, 90, 0.5])
+  expect(s.categories).toEqual([...CATEGORIES])
+  expect(s.excludePaths).toEqual([])
+  expect(readSettings({ dailyBudgetUsd: 'no limit' }).dailyBudgetUsd).toBe(0)
+  expect(readSettings({ questionsPerHour: 'lots' }).questionsPerHour).toBe(4)
+  expect(readSettings({ excludePaths: 'none, vendor/**' }).excludePaths).toEqual(['vendor/**'])
 })

@@ -1,55 +1,100 @@
 {
   "name": "repo-quiz",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "After each reply, a sidebar asks an interview-style question or shares a grounded fact about the repository you are working in.",
   "types": "./types/index.d.ts",
-  "author": { "name": "lukeismith" },
+  "author": {
+    "name": "lukeismith"
+  },
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/lukeismith/lukes-claudecode-mods/tree/main/repo-quiz",
   "userConfig": {
     "questionsPerHour": {
-      "type": "number",
+      "type": "string",
       "title": "Questions per hour",
-      "description": "The most interview questions started per repository in any hour, from 0 to 20. 0 means facts only.",
-      "default": 4
+      "description": "The most interview questions started per repository in any hour. 0 means facts only.",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "6",
+        "8",
+        "12"
+      ],
+      "default": "4"
     },
     "rapidReplyMinutes": {
-      "type": "number",
+      "type": "string",
       "title": "Rapid reply window (minutes)",
-      "description": "When your messages come closer together than this, a fact appears instead of a question. 0 turns the rule off.",
-      "default": 3
+      "description": "When your messages come closer together than this many minutes, a fact appears instead of a question. 0 turns the rule off.",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "5",
+        "10"
+      ],
+      "default": "3"
     },
     "mode": {
       "type": "string",
       "title": "What to show",
       "description": "Questions and facts, questions only, or facts only.",
-      "options": ["questions and facts", "questions only", "facts only"],
+      "options": [
+        "questions and facts",
+        "questions only",
+        "facts only"
+      ],
       "default": "questions and facts"
     },
     "refresherEvery": {
-      "type": "number",
+      "type": "string",
       "title": "Refresher question every",
       "description": "Every Nth question is about code that has not changed in a while. 0 means never.",
-      "default": 3
+      "options": [
+        "0",
+        "2",
+        "3",
+        "4",
+        "5",
+        "10"
+      ],
+      "default": "3"
     },
     "refresherMinAgeDays": {
-      "type": "number",
+      "type": "string",
       "title": "Refresher minimum age (days)",
-      "description": "How long a file must have gone unchanged to count as refresher material.",
-      "default": 30
+      "description": "How many days a file must go unchanged to count as refresher material.",
+      "options": [
+        "7",
+        "14",
+        "30",
+        "60",
+        "90",
+        "180",
+        "365"
+      ],
+      "default": "30"
     },
     "difficulty": {
       "type": "string",
       "title": "Difficulty",
       "description": "The interview bar the questions aim for.",
-      "options": ["collegiate", "senior", "staff"],
+      "options": [
+        "collegiate",
+        "senior",
+        "staff"
+      ],
       "default": "senior"
     },
     "categories": {
       "type": "string",
       "title": "Question categories",
-      "description": "Comma-separated categories to rotate through; empty means all. The categories are: architecture, how code works, system design, debugging, language semantics, concurrency, testing, security, performance, data modeling.",
-      "default": ""
+      "description": "Comma-separated categories to rotate through, or \"all\". The categories are: architecture, how code works, system design, debugging, language semantics, concurrency, testing, security, performance, data modeling.",
+      "default": "all"
     },
     "flawReview": {
       "type": "boolean",
@@ -61,41 +106,60 @@
       "type": "string",
       "title": "Documentation sources",
       "description": "Whether cards may cite well-regarded unofficial pages when no official documentation covers a point.",
-      "options": ["official preferred", "official only"],
+      "options": [
+        "official preferred",
+        "official only"
+      ],
       "default": "official preferred"
     },
     "excludePaths": {
       "type": "string",
       "title": "Excluded paths",
-      "description": "Comma-separated glob patterns for files never used as a question's focus, such as \"generated/**, *.pb.swift\".",
-      "default": ""
+      "description": "Comma-separated glob patterns for files never used as a question's focus, such as \"generated/**, *.pb.swift\", or \"none\".",
+      "default": "none"
     },
     "questionModel": {
       "type": "string",
       "title": "Question model",
       "description": "Writes each question and its model answer. Each choice uses the newest model of that family your Claude Code knows.",
-      "options": ["haiku", "sonnet", "opus"],
+      "options": [
+        "haiku",
+        "sonnet",
+        "opus"
+      ],
       "default": "opus"
     },
     "questionEffort": {
       "type": "string",
       "title": "Question effort",
       "description": "How hard the question model thinks. Lower is faster and cheaper.",
-      "options": ["low", "medium", "high"],
+      "options": [
+        "low",
+        "medium",
+        "high"
+      ],
       "default": "high"
     },
     "factModel": {
       "type": "string",
       "title": "Fact model",
       "description": "Writes each batch of \"Did you know?\" facts.",
-      "options": ["haiku", "sonnet", "opus"],
+      "options": [
+        "haiku",
+        "sonnet",
+        "opus"
+      ],
       "default": "sonnet"
     },
     "gradeModel": {
       "type": "string",
       "title": "Grading model",
       "description": "Grades your typed answer when you press Grade.",
-      "options": ["haiku", "sonnet", "opus"],
+      "options": [
+        "haiku",
+        "sonnet",
+        "opus"
+      ],
       "default": "sonnet"
     },
     "steWriting": {
@@ -105,10 +169,19 @@
       "default": true
     },
     "dailyBudgetUsd": {
-      "type": "number",
+      "type": "string",
       "title": "Daily budget (USD)",
-      "description": "Estimated API-equivalent spend per day after which repo-quiz stops starting model runs. 0 means no cap.",
-      "default": 0
+      "description": "Estimated API-equivalent spend per day, in US dollars, after which repo-quiz stops starting model runs.",
+      "options": [
+        "no limit",
+        "0.50",
+        "1",
+        "2",
+        "5",
+        "10",
+        "20"
+      ],
+      "default": "no limit"
     },
     "openPaneOnStart": {
       "type": "boolean",
@@ -132,7 +205,11 @@
       "type": "string",
       "title": "Local telemetry",
       "description": "Records kept on this machine for the Stats view. \"counts only\" keeps no text you typed and no card content; \"full\" also keeps both, for reviewing quality later.",
-      "options": ["counts only", "full", "off"],
+      "options": [
+        "counts only",
+        "full",
+        "off"
+      ],
       "default": "counts only"
     }
   }

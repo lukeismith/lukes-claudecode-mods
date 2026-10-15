@@ -33,7 +33,6 @@ import {
   baseName,
   isOfficialUrl,
   chooseCard,
-  clampSetting,
   costLine,
   costOf,
   dayKey,
@@ -85,11 +84,10 @@ const costAtom = atom({ plugin: 'repo-quiz', key: 'cost' } as const, { todayUsd:
 const uiAtom = atom({ plugin: 'repo-quiz', key: 'ui' } as const, { sourcesOpen: false, detailsOpen: false, confirmOff: false, factOpen: false })
 const modeAtom = atom({ plugin: 'repo-quiz', key: 'mode' } as const, { pausedUntil: null, isOff: false })
 
-const VERSION = '0.2.0'
+const VERSION = '0.2.1'
 const QUESTIONER = 'repo-quiz:questioner'
 const FACT_FINDER = 'repo-quiz:fact-finder'
 const AGENT_TOOLS = ['Read', 'Bash', 'WebSearch', 'WebFetch']
-const CONFIG_PREFIX = 'repo-quiz.'
 const HOUR_MS = 3_600_000
 const DAY_MS = 24 * HOUR_MS
 // A run with no turn.complete after this long is treated as dead, so it can
@@ -934,12 +932,6 @@ export const register: Register = (on, options) => {
 
   // An out-of-range number is saved as its clamped value, so /config shows what
   // will apply. A failure lets the change through: readSettings clamps it on load anyway.
-  on('config.set', { key: /^repo-quiz\./ }, async ($, e, next) => {
-    const value = typeof e.value === 'number' ? clampSetting(e.key.slice(CONFIG_PREFIX.length), e.value) : null
-
-    return value === null || value === e.value ? next(e) : next({ ...e, value })
-  }).catch(($, e, next) => next(e))
-
   on('prompt.submit', async ($, e, next) => {
     const kind = e.origin.kind
     if (isAgentReport(kind, e.text, await read($, oursAtom))) return { drop: REPORT_DROPPED }
