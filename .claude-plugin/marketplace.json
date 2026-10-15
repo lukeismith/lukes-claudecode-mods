@@ -1,0 +1,14 @@
+{
+  "name": "lukes-claudecode-mods",
+  "description": "Mods for Claude Code: live panes, prompts and hooks that change how Claude Code looks and behaves.",
+  "owner": {
+    "name": "lukeismith"
+  },
+  "plugins": [
+    {
+      "name": "repo-quiz",
+      "source": "./repo-quiz",
+      "description": "After each reply, a sidebar asks an interview-style question or shares a grounded fact about the repository you are working in."
+    }
+  ]
+}
