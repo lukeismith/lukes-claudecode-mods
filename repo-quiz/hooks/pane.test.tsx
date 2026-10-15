@@ -233,7 +233,7 @@ for (const surface of ['terminal', 'desktop'] as const) {
     ])
   })
 
-  test(`${surface}: the header line gives way, the folder's name first, so the cost always shows`, { options: { dailyBudgetUsd: 1 } }, async ($, on) => {
+  test(`${surface}: the header line gives way, the folder's name first, so the cost always shows`, { options: { dailyBudgetUsd: '1' } }, async ($, on) => {
     world(on, { cost: { todayUsd: 0.4, sessionUsd: 0.4 } })
     const ui = await mountPane($, { bodyColumns: 40 })
 
@@ -556,7 +556,7 @@ for (const surface of ['terminal', 'desktop'] as const) {
     expect(await ui.find({ type: 'Text', text: 'Off for this repository' })).toBeDefined()
   })
 
-  test(`${surface}: past 80% of the budget the meter turns to a warning`, { options: { dailyBudgetUsd: 1 } }, async ($, on) => {
+  test(`${surface}: past 80% of the budget the meter turns to a warning`, { options: { dailyBudgetUsd: '1' } }, async ($, on) => {
     world(on, { cost: { todayUsd: 0.85, sessionUsd: 0.85 } })
     const ui = await mountPane($)
 
@@ -566,7 +566,7 @@ for (const surface of ['terminal', 'desktop'] as const) {
     expect(await ui.find({ type: 'Text', text: /^Daily budget reached/ })).toBeUndefined()
   })
 
-  test(`${surface}: over budget, grading pauses and the empty state says why`, { options: { dailyBudgetUsd: 1 } }, async ($, on) => {
+  test(`${surface}: over budget, grading pauses and the empty state says why`, { options: { dailyBudgetUsd: '1' } }, async ($, on) => {
     world(on, { question: REVEALED, cost: { todayUsd: 1.2, sessionUsd: 1.2 } })
     const ui = await mountPane($)
 

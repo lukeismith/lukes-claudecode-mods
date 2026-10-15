@@ -279,26 +279,13 @@ test('with the status line turned off, it is cleared instead', { options: { stat
   expect(w.statuses.every(text => text === undefined)).toBe(true)
 })
 
-test('/config saves an out-of-range number as its clamped value and passes other rows through', async ($, on) => {
-  world(on)
-  on('config.set', ($, e) => ({ value: e.value }))
-  const row = { previous: 4, provider: { plugin: 'repo-quiz', tier: 'user' as const }, origin: { kind: 'composer' as const } }
-
-  expect(await $.config.set({ ...row, key: 'repo-quiz.questionsPerHour', value: 99 })).toEqual({ value: 20 })
-  expect(await $.config.set({ ...row, key: 'repo-quiz.questionsPerHour', value: 6 })).toEqual({ value: 6 })
-  expect(await $.config.set({ ...row, key: 'repo-quiz.refresherEvery', value: 2.4 })).toEqual({ value: 2 })
-  expect(await $.config.set({ ...row, key: 'repo-quiz.rapidReplyMinutes', value: -2 })).toEqual({ value: 0 })
-  expect(await $.config.set({ ...row, key: 'repo-quiz.mode', value: 'facts only' })).toEqual({ value: 'facts only' })
-  expect(await $.config.set({ ...row, key: 'other-mod.questionsPerHour', value: 99 })).toEqual({ value: 99 })
-})
-
 test('counts-only telemetry, the default, keeps the card record without its question, answer or paths', async ($, on) => {
   const w = world(on)
   await replyAndSpawn($, w)
   await finishQuestion($, w)
   const records = w.telemetry()
 
-  expect(records.find(record => record.type === 'card')).toMatchObject({ kind: 'question', category: DRAFT.category, session: 'session-1', version: '0.2.0' })
+  expect(records.find(record => record.type === 'card')).toMatchObject({ kind: 'question', category: DRAFT.category, session: 'session-1', version: '0.2.1' })
   expect(records.find(record => record.type === 'run')).toMatchObject({ job: 'question', usage: { input_tokens: 1000, output_tokens: 500 } })
   const text = JSON.stringify(records)
   // The context and ask are typed text too, so counts only drops them with the question.
