@@ -93,22 +93,22 @@ Change the settings in `/config`. Each change has an effect immediately. Claude 
 
 | Setting | Default | What it does |
 | --- | --- | --- |
-| <a id="questions-per-hour"></a>Questions per hour<br>`questionsPerHour` | 4 | The maximum number of questions per repository in one hour, from 0 to 20. 0 gives facts only. |
-| <a id="rapid-reply-window"></a>Rapid reply window (minutes)<br>`rapidReplyMinutes` | 3 | When your messages come closer together than this, repo-quiz shows a fact instead of a question. 0 turns off this rule. |
+| <a id="questions-per-hour"></a>Questions per hour<br>`questionsPerHour` | 4 | The maximum number of questions per repository in one hour: 0, 1, 2, 3, 4, 6, 8 or 12. 0 gives facts only. |
+| <a id="rapid-reply-window"></a>Rapid reply window (minutes)<br>`rapidReplyMinutes` | 3 | When your messages come closer together than this, repo-quiz shows a fact instead of a question. The choices are 0, 1, 2, 3, 5 or 10 minutes. 0 turns off this rule. |
 | <a id="what-to-show"></a>What to show<br>`mode` | questions and facts | You can also choose questions only, or facts only. |
-| <a id="refresher-question-every"></a>Refresher question every<br>`refresherEvery` | 3 | Every Nth question is about code that has not changed for a long time. 0 means never. |
-| <a id="refresher-minimum-age"></a>Refresher minimum age (days)<br>`refresherMinAgeDays` | 30 | A file must stay unchanged for this many days to become refresher material. |
+| <a id="refresher-question-every"></a>Refresher question every<br>`refresherEvery` | 3 | Every Nth question is about code that has not changed for a long time: 0, 2, 3, 4, 5 or 10. 0 means never. |
+| <a id="refresher-minimum-age"></a>Refresher minimum age (days)<br>`refresherMinAgeDays` | 30 | A file must stay unchanged for this many days to become refresher material: 7, 14, 30, 60, 90, 180 or 365. |
 | <a id="difficulty"></a>Difficulty<br>`difficulty` | senior | The interview level: collegiate, senior or staff. |
-| <a id="question-categories"></a>Question categories<br>`categories` | all | A comma-separated subset, such as `architecture, concurrency, security`. Partial names also match. |
+| <a id="question-categories"></a>Question categories<br>`categories` | all | A comma-separated subset, such as `architecture, concurrency, security`, or `all`. Partial names also match. |
 | <a id="flaw-review"></a>Flaw review<br>`flawReview` | on | When this is on, cards point out real problems that the research found. |
 | <a id="documentation-sources"></a>Documentation sources<br>`sourcePolicy` | official preferred | "official only" removes each source that is not in the official documentation for your stack. |
-| <a id="excluded-paths"></a>Excluded paths<br>`excludePaths` | none | Comma-separated glob patterns for files that questions never focus on, such as `generated/**, *.pb.swift`. A pattern without a slash matches file names only. For a folder, write `vendor/**`. |
+| <a id="excluded-paths"></a>Excluded paths<br>`excludePaths` | none | `none`, or comma-separated glob patterns for files that questions never focus on, such as `generated/**, *.pb.swift`. A pattern without a slash matches file names only. For a folder, write `vendor/**`. |
 | <a id="question-model"></a>Question model<br>`questionModel` | opus | Haiku, Sonnet or Opus. |
 | <a id="question-effort"></a>Question effort<br>`questionEffort` | high | Low, medium or high. A lower effort is faster and costs less. |
 | <a id="fact-model"></a>Fact model<br>`factModel` | sonnet | Haiku, Sonnet or Opus. |
 | <a id="grading-model"></a>Grading model<br>`gradeModel` | sonnet | Haiku, Sonnet or Opus. |
 | <a id="simplified-technical-english"></a>Simplified Technical English<br>`steWriting` | on | When this is on, the models write in a plain style. The style comes from ASD-STE100: one idea per sentence, the active voice, simple tenses and plain words. |
-| <a id="daily-budget"></a>Daily budget (USD)<br>`dailyBudgetUsd` | 0 | When the estimated spend for the day reaches this amount, repo-quiz starts no more model runs. 0 means no limit. |
+| <a id="daily-budget"></a>Daily budget (USD)<br>`dailyBudgetUsd` | no limit | When the estimated spend for the day reaches this amount, repo-quiz starts no more model runs. The choices are no limit, $0.50, $1, $2, $5, $10 or $20. |
 | <a id="open-the-pane-at-start"></a>Open the pane at start<br>`openPaneOnStart` | on | When this is on, the sidebar opens when a session starts. |
 | <a id="notify-on-a-new-question"></a>Notify on a new question<br>`toastOnNewQuestion` | on | When this is on, a toast appears if a question is ready and the pane is hidden. |
 | <a id="status-line"></a>Status line<br>`statusLine` | on | When this is on, the status line shows the state of repo-quiz and the cost for today. |

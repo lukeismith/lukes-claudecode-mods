@@ -80,8 +80,10 @@ const NUMBER_FIELDS: Record<string, NumberField> = {
 export function clampSetting(field: string, value: unknown): number | null {
   if (!Object.hasOwn(NUMBER_FIELDS, field)) return null
   const spec = NUMBER_FIELDS[field] as NumberField
-  if (typeof value !== 'number' || !Number.isFinite(value)) return spec.fallback
-  const v = spec.isInteger ? Math.round(value) : value
+  // The /config pickers store numbers as strings ("4", "0.50"), and the budget's "no limit" means 0.
+  const parsed = typeof value === 'string' ? (value.trim() === 'no limit' ? 0 : Number(value)) : value
+  if (typeof parsed !== 'number' || !Number.isFinite(parsed)) return spec.fallback
+  const v = spec.isInteger ? Math.round(parsed) : parsed
   return Math.min(spec.max, Math.max(spec.min, v))
 }
 
@@ -104,7 +106,8 @@ const CATEGORY_MATCH: readonly { key: string; stems: readonly string[] }[] = [
 /** Comma-separated text (or a list) as trimmed, non-empty entries. */
 function commaList(value: unknown): string[] {
   const items = typeof value === 'string' ? value.split(',') : Array.isArray(value) ? value.filter((v) => typeof v === 'string') : []
-  return items.map((s) => s.trim()).filter((s) => s !== '')
+  // "none" is the visible default in /config, and means no patterns.
+  return items.map((s) => s.trim()).filter((s) => s !== '' && s.toLowerCase() !== 'none')
 }
 
 /** Full category names in CATEGORIES order for the tokens that match one; every category when none does. */
