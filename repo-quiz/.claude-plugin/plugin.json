@@ -1,0 +1,139 @@
+{
+  "name": "repo-quiz",
+  "version": "0.2.0",
+  "description": "After each reply, a sidebar asks an interview-style question or shares a grounded fact about the repository you are working in.",
+  "types": "./types/index.d.ts",
+  "author": { "name": "lukeismith" },
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/lukeismith/lukes-claudecode-mods/tree/main/repo-quiz",
+  "userConfig": {
+    "questionsPerHour": {
+      "type": "number",
+      "title": "Questions per hour",
+      "description": "The most interview questions started per repository in any hour, from 0 to 20. 0 means facts only.",
+      "default": 4
+    },
+    "rapidReplyMinutes": {
+      "type": "number",
+      "title": "Rapid reply window (minutes)",
+      "description": "When your messages come closer together than this, a fact appears instead of a question. 0 turns the rule off.",
+      "default": 3
+    },
+    "mode": {
+      "type": "string",
+      "title": "What to show",
+      "description": "Questions and facts, questions only, or facts only.",
+      "options": ["questions and facts", "questions only", "facts only"],
+      "default": "questions and facts"
+    },
+    "refresherEvery": {
+      "type": "number",
+      "title": "Refresher question every",
+      "description": "Every Nth question is about code that has not changed in a while. 0 means never.",
+      "default": 3
+    },
+    "refresherMinAgeDays": {
+      "type": "number",
+      "title": "Refresher minimum age (days)",
+      "description": "How long a file must have gone unchanged to count as refresher material.",
+      "default": 30
+    },
+    "difficulty": {
+      "type": "string",
+      "title": "Difficulty",
+      "description": "The interview bar the questions aim for.",
+      "options": ["collegiate", "senior", "staff"],
+      "default": "senior"
+    },
+    "categories": {
+      "type": "string",
+      "title": "Question categories",
+      "description": "Comma-separated categories to rotate through; empty means all. The categories are: architecture, how code works, system design, debugging, language semantics, concurrency, testing, security, performance, data modeling.",
+      "default": ""
+    },
+    "flawReview": {
+      "type": "boolean",
+      "title": "Flaw review",
+      "description": "Show a \"possible flaw\" callout when the research behind a card exposes a real problem in the code.",
+      "default": true
+    },
+    "sourcePolicy": {
+      "type": "string",
+      "title": "Documentation sources",
+      "description": "Whether cards may cite well-regarded unofficial pages when no official documentation covers a point.",
+      "options": ["official preferred", "official only"],
+      "default": "official preferred"
+    },
+    "excludePaths": {
+      "type": "string",
+      "title": "Excluded paths",
+      "description": "Comma-separated glob patterns for files never used as a question's focus, such as \"generated/**, *.pb.swift\".",
+      "default": ""
+    },
+    "questionModel": {
+      "type": "string",
+      "title": "Question model",
+      "description": "Writes each question and its model answer. Each choice uses the newest model of that family your Claude Code knows.",
+      "options": ["haiku", "sonnet", "opus"],
+      "default": "opus"
+    },
+    "questionEffort": {
+      "type": "string",
+      "title": "Question effort",
+      "description": "How hard the question model thinks. Lower is faster and cheaper.",
+      "options": ["low", "medium", "high"],
+      "default": "high"
+    },
+    "factModel": {
+      "type": "string",
+      "title": "Fact model",
+      "description": "Writes each batch of \"Did you know?\" facts.",
+      "options": ["haiku", "sonnet", "opus"],
+      "default": "sonnet"
+    },
+    "gradeModel": {
+      "type": "string",
+      "title": "Grading model",
+      "description": "Grades your typed answer when you press Grade.",
+      "options": ["haiku", "sonnet", "opus"],
+      "default": "sonnet"
+    },
+    "steWriting": {
+      "type": "boolean",
+      "title": "Simplified Technical English",
+      "description": "Ask the models to write in a plain style based on ASD-STE100: one idea per sentence, the active voice, simple tenses and plain words.",
+      "default": true
+    },
+    "dailyBudgetUsd": {
+      "type": "number",
+      "title": "Daily budget (USD)",
+      "description": "Estimated API-equivalent spend per day after which repo-quiz stops starting model runs. 0 means no cap.",
+      "default": 0
+    },
+    "openPaneOnStart": {
+      "type": "boolean",
+      "title": "Open the pane at start",
+      "description": "Open the sidebar when a session starts. /repo-quiz always opens it.",
+      "default": true
+    },
+    "toastOnNewQuestion": {
+      "type": "boolean",
+      "title": "Notify on a new question",
+      "description": "Show a toast when a new question is ready and the pane is hidden.",
+      "default": true
+    },
+    "statusLine": {
+      "type": "boolean",
+      "title": "Status line",
+      "description": "Show repo-quiz's state and today's estimated cost in the status line.",
+      "default": true
+    },
+    "telemetry": {
+      "type": "string",
+      "title": "Local telemetry",
+      "description": "Records kept on this machine for the Stats view. \"counts only\" keeps no text you typed and no card content; \"full\" also keeps both, for reviewing quality later.",
+      "options": ["counts only", "full", "off"],
+      "default": "counts only"
+    }
+  }
+}
